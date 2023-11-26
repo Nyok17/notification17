@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dynamic Notification Project</title>
+</head>
+<body>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Set the time after which you want to receive the notification (in milliseconds)
+    const notificationTime = 5000; // 5000 milliseconds = 5 seconds
+
+    setTimeout(() => {
+      // Check if the Notification API is supported by the browser
+      if ('Notification' in window) {
+        // Request permission to show notifications
+        Notification.requestPermission().then((permission) => {
+          if (permission === 'granted') {
+            // Get the current time
+            const currentTime = new Date().getHours();
+            let name= "Nyok"
+
+            // Determine the appropriate greeting based on the current time
+            let greeting = '';
+            if (currentTime < 12) {
+              greeting = 'Good morning! ' + name + "😃";
+            } else if (currentTime < 18) {
+              greeting = 'Good afternoon! ' + name + "😃";
+            } else {
+              greeting = 'Good evening! ' + name + "😃";
+            }
+
+            // Create and show the notification with the dynamic greeting
+            const notification = new Notification(greeting, {
+              body: 'Happy coding!',
+              icon: './nyok.jpg' // You can replace this with the path to your own icon
+            });
+
+            // You can also add an event listener for when the notification is clicked
+            notification.addEventListener('click', () => {
+              console.log('Notification clicked!');
+              // Add any action you want to perform when the notification is clicked
+            });
+          } else {
+            console.log('Notification permission denied');
+          }
+        });
+      } else {
+        console.log('Notification API not supported');
+      }
+    }, notificationTime);
+  });
+</script>
+</body>
+</html>
